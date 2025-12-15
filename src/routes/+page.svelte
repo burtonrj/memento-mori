@@ -117,8 +117,8 @@
 <div class="container mx-auto min-h-screen p-8 space-y-8">
 	<header class="flex flex-col items-center gap-4">
 		<img
-			src="/images/MOMENTO%20MORI.png"
-			alt="Momento Mori"
+			src="/images/MEMENTO%20MORI.png"
+			alt="Memento Mori"
 			class="h-32 md:h-48 object-contain rounded-2xl"
 		/>
 

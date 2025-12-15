@@ -1,4 +1,4 @@
-# Momento Mori
+# Memento Mori
 
 A weekly scheduling and objective management application designed to help balance multiple work streams.
 
@@ -6,7 +6,7 @@ A weekly scheduling and objective management application designed to help balanc
 
 I created this app to manage my specific work patterns, which involve balancing part-time contracting work with building a startup, **Game Oracle**. It helps in visualizing time allocation and ensuring that objectives for both roles are met without burnout or confusion.
 
-To keep things balanced (and slightly dramatic), the app features a **Momento Mori** clock—a friendly ticking reminder of the time you have left. But don't panic! We counter that existential spice with a **Positive Affirmations** marquee. You can even edit these affirmations right in the app, so whether you need a gentle "You got this!" or a stern "Stop procrastinating!", it's all up to you.
+To keep things balanced (and slightly dramatic), the app features a **Memento Mori** clock—a friendly ticking reminder of the time you have left. But don't panic! We counter that existential spice with a **Positive Affirmations** marquee. You can even edit these affirmations right in the app, so whether you need a gentle "You got this!" or a stern "Stop procrastinating!", it's all up to you.
 
 The core philosophy is to have a "fresh slate" each week, allowing for focused planning without the baggage of carrying over endless to-do lists.
 
