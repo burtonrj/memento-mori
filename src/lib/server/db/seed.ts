@@ -33,8 +33,9 @@ export async function seedDatabase() {
 		const data: DefaultData = JSON.parse(fileContent);
 
 		// 1. Create User
+		const birthYear = new Date().getFullYear() - data.age;
 		const [newUser] = await db.insert(user).values({
-			age: data.age,
+			birthDate: `${birthYear}-01-01`,
 			lifespan: 80
 		}).returning();
 

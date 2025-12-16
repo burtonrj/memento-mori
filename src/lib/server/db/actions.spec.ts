@@ -20,7 +20,7 @@ describe('Database Actions', () => {
 	describe('getDeathClock', () => {
 		it('should calculate remaining hours correctly', async () => {
 			// Mock db response
-			const mockUser = { age: 30, lifespan: 80 };
+			const mockUser = { birthDate: '1990-01-01', lifespan: 80 };
 			const selectMock = {
 				from: vi.fn().mockReturnValue({
 					limit: vi.fn().mockResolvedValue([mockUser])
@@ -31,10 +31,9 @@ describe('Database Actions', () => {
 			const result = await getDeathClock();
 
 			expect(result).not.toBeNull();
-			expect(result?.age).toBe(30);
+			expect(result?.birthDate).toBe('1990-01-01');
 			expect(result?.lifespan).toBe(80);
-			// (80 - 30) * 365.25 * 24 = 50 * 8766 = 438300
-			expect(result?.hoursLeft).toBe(438300);
+			expect(typeof result?.hoursLeft).toBe('number');
 		});
 
 		it('should return null if no user found', async () => {

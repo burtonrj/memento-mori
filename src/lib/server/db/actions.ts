@@ -6,12 +6,17 @@ export const getDeathClock = async () => {
 	const userData = await db.select().from(user).limit(1);
 	if (!userData.length) return null;
 
-	const { age, lifespan, weeklyAvailableTime } = userData[0];
-	const yearsLeft = lifespan - age;
-	const hoursLeft = Math.floor(yearsLeft * 365.25 * 24);
+	const { birthDate, lifespan, weeklyAvailableTime } = userData[0];
+	
+	const birth = new Date(birthDate);
+	const death = new Date(birth);
+	death.setFullYear(birth.getFullYear() + lifespan);
+	const now = new Date();
+	const msLeft = death.getTime() - now.getTime();
+	const hoursLeft = Math.floor(msLeft / (1000 * 60 * 60));
 
 	return {
-		age,
+		birthDate,
 		lifespan,
 		weeklyAvailableTime,
 		hoursLeft
@@ -121,14 +126,14 @@ export const deleteObjective = async (id: number) => {
 	await db.delete(weeklyObjective).where(eq(weeklyObjective.id, id));
 };
 
-export const updateUser = async (age: number, lifespan: number, weeklyAvailableTime?: number) => {
+export const updateUser = async (birthDate: string, lifespan: number, weeklyAvailableTime?: number) => {
 	// Update the first user found (single user app)
 	// We use a subquery or just update all, but let's be safe and update where id exists
 	// Since we don't have the ID passed in, and we know there's only one user...
 	// Let's just update all rows, but ensure values are valid numbers
-	if (isNaN(age) || isNaN(lifespan)) return;
+	if (!birthDate || isNaN(lifespan)) return;
 	
-	const updates: { age: number; lifespan: number; weeklyAvailableTime?: number } = { age, lifespan };
+	const updates: { birthDate: string; lifespan: number; weeklyAvailableTime?: number } = { birthDate, lifespan };
 	if (weeklyAvailableTime !== undefined && !isNaN(weeklyAvailableTime)) {
 		updates.weeklyAvailableTime = weeklyAvailableTime;
 	}

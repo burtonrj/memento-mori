@@ -2,7 +2,7 @@ import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
-	age: integer('age').notNull(),
+	birthDate: text('birth_date').default('1990-01-01').notNull(),
 	lifespan: integer('lifespan').default(80).notNull(),
 	weeklyAvailableTime: integer('weekly_available_time').default(112).notNull() // 16 * 7 = 112 (assuming 8h sleep)
 });

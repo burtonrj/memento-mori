@@ -17,12 +17,32 @@
 	};
 
 	// svelte-ignore state_referenced_locally
-		let allocations = $state<Allocation[]>(data.allocations || []);
+	let allocations = $state<Allocation[]>(data.allocations || []);
 	let selectedBricks = $state<{ blockId: number; id: string }[]>([]);
 	let isLocked = $state(true);
+	// svelte-ignore state_referenced_locally
+	let timeRemaining = $state(data.deathClock?.hoursLeft || 0);
 
 	$effect(() => {
 		allocations = data.allocations || [];
+	});
+
+	$effect(() => {
+		if (!data.deathClock) return;
+		const deathClock = data.deathClock;
+		
+		const updateClock = () => {
+			const birth = new Date(deathClock.birthDate);
+			const death = new Date(birth);
+			death.setFullYear(birth.getFullYear() + deathClock.lifespan);
+			const now = new Date();
+			const msLeft = death.getTime() - now.getTime();
+			timeRemaining = msLeft / (1000 * 60 * 60);
+		};
+
+		updateClock();
+		const interval = setInterval(updateClock, 1000);
+		return () => clearInterval(interval);
 	});
 
 	// Derived
@@ -125,7 +145,7 @@
 		{#if data.deathClock}
 			<div class="text-center space-y-2">
 				<div class="text-lg md:text-2xl font-bold font-mono">
-					{data.deathClock.hoursLeft.toLocaleString()} Hours Left
+					{Math.floor(timeRemaining).toLocaleString()} Hours Left
 				</div>
 				<p class="text-xl text-surface-600-400-token">Let's make the most of it</p>
 			</div>
@@ -155,12 +175,12 @@
 								class="space-y-4 p-4"
 							>
 								<label class="label">
-									<span>Current Age</span>
+									<span>Date of Birth</span>
 									<input
 										class="input"
-										type="number"
-										name="age"
-										value={data.deathClock.age}
+										type="date"
+										name="birthDate"
+										value={data.deathClock.birthDate}
 										required
 									/>
 								</label>

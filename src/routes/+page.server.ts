@@ -26,12 +26,12 @@ export const load: PageServerLoad = async () => {
 export const actions: Actions = {
 	updateSettings: async ({ request }) => {
 		const data = await request.formData();
-		const age = Number(data.get('age'));
+		const birthDate = String(data.get('birthDate'));
 		const lifespan = Number(data.get('lifespan'));
 		const weeklyAvailableTime = data.has('weeklyAvailableTime') ? Number(data.get('weeklyAvailableTime')) : undefined;
 
-		if (!isNaN(age) && !isNaN(lifespan)) {
-			await updateUser(age, lifespan, weeklyAvailableTime);
+		if (birthDate && !isNaN(lifespan)) {
+			await updateUser(birthDate, lifespan, weeklyAvailableTime);
 		}
 
 		return { success: true };
