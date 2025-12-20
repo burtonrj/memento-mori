@@ -43,27 +43,27 @@
         "The Crisis of Purpose is a Crisis of Service.",
         "Stop trying to be 'right'; try to be 'effective'."
     ],
-    "blocks": [
-        { "name": "Exercise", "color": "#ef4444" },
-        { "name": "Work", "color": "#3b82f6" },
-        { "name": "Business", "color": "#8b5cf6" },
-        { "name": "Social", "color": "#f59e0b" },
-        { "name": "Hobbies", "color": "#10b981" },
-        { "name": "Chores", "color": "#6b7280" },
-        { "name": "Relaxation", "color": "#ec4899" },
-        { "name": "Studying", "color": "#06b6d4" }
-    ],
     "age": 34,
-    "availableTime": 100,
-    "timeAllocation": [5, 24, 42, 6, 6, 6, 6, 5],
+    "purposeLabel": "",
+    "necessityBlocks": [
+        { "name": "Work", "color": "#3b82f6" },
+        { "name": "Chores", "color": "#6b7280" },
+        { "name": "Exercise", "color": "#22c55e" },
+        { "name": "Relaxation", "color": "#ec4899" }
+    ],
     "objectives": {
-        "Exercise": ["Stretch for 10 minutes daily", "Go for a walk 3 times this week"],
-        "Work": ["Be a positive influence in my team", "Respond to all client emails"],
-        "Business": ["Make progress on the new product feature", "Fix bugs from last sprint"],
-        "Social": ["Call a family member", "Play an online game with friends"],
-        "Hobbies": ["Make some progress on that Godot project", "Read a chapter of my book"],
-        "Chores": ["Cook for the wife", "Do the shopping"],
-        "Relaxation": ["Watch TV with the wife", "Watch Instagram Reels for 30 minutes (guilty pleasure)"],
-        "Studying": ["Complete two chapters of Causal AI", "Practice Causal AI problems"]
+        "long-term-purpose": [
+            "Define your life's primary mission",
+            "Break down your purpose into achievable milestones",
+            "Identify what you need to learn or master"
+        ],
+        "weekly-purpose": [
+            "Make meaningful progress on one aspect of your purpose",
+            "Dedicate focused time blocks to purpose work"
+        ],
+        "weekly-necessity": [
+            "Complete essential work tasks",
+            "Maintain basic life responsibilities"
+        ]
     }
 }
