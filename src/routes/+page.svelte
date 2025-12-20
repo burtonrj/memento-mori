@@ -323,7 +323,7 @@
 							<textarea
 								class="textarea p-1 text-sm w-full rounded-md border-transparent focus:border-primary-500 focus:ring-0 resize-none min-h-6 {objective.isCompleted ? 'bg-success-500/30' : 'bg-surface-500/10'}"
 								name="text"
-								rows="1"
+								rows="2"
 								placeholder="Long-term objective..."
 								onchange={(e) => e.currentTarget.form?.requestSubmit()}
 							>{objective.text}</textarea>
@@ -390,7 +390,7 @@
 							<textarea
 								class="textarea p-1 text-sm w-full rounded-md border-transparent focus:border-primary-500 focus:ring-0 resize-none min-h-6 {objective.isCompleted ? 'bg-success-500/30' : 'bg-surface-500/10'}"
 								name="text"
-								rows="1"
+								rows="2"
 								placeholder="Weekly purpose objective..."
 								onchange={(e) => e.currentTarget.form?.requestSubmit()}
 							>{objective.text}</textarea>
@@ -457,7 +457,7 @@
 							<textarea
 								class="textarea p-1 text-sm w-full rounded-md border-transparent focus:border-primary-500 focus:ring-0 resize-none min-h-6 {objective.isCompleted ? 'bg-success-500/30' : 'bg-surface-500/10'}"
 								name="text"
-								rows="1"
+								rows="2"
 								placeholder="Weekly necessity objective..."
 								onchange={(e) => e.currentTarget.form?.requestSubmit()}
 							>{objective.text}</textarea>
