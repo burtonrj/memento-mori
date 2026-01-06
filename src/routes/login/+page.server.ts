@@ -21,7 +21,7 @@ export const actions: Actions = {
 
 		console.log('Password verified, creating session...');
 		const token = createSessionToken();
-		
+
 		cookies.set('session', token, {
 			path: '/',
 			httpOnly: true,

@@ -19,7 +19,9 @@ export const necessityBlock = sqliteTable('necessity_block', {
 	name: text('name').notNull(), // Default: Work, Chores, Relaxation, Study
 	color: text('color').notNull().default('#cccccc'),
 	sortOrder: integer('sort_order').notNull().default(0), // 0-3 for the four blocks
-	userId: integer('user_id').references(() => user.id).notNull()
+	userId: integer('user_id')
+		.references(() => user.id)
+		.notNull()
 });
 
 // Objectives - three types based on category
@@ -41,4 +43,3 @@ export const scheduleAllocation = sqliteTable('schedule_allocation', {
 	dayOfWeek: integer('day_of_week').notNull(), // 0=Monday, 6=Sunday
 	hourSlot: integer('hour_slot').notNull() // 0-23
 });
-

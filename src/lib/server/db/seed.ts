@@ -18,7 +18,7 @@ export async function seedDatabase() {
 	try {
 		// Check if user table is empty
 		const userCount = await db.select({ count: count() }).from(user);
-		
+
 		if (userCount[0].count > 0) {
 			console.log('Database already seeded.');
 			return;
@@ -33,17 +33,18 @@ export async function seedDatabase() {
 
 		// 1. Create User
 		const birthYear = new Date().getFullYear() - data.age;
-		const [newUser] = await db.insert(user).values({
-			birthDate: `${birthYear}-01-01`,
-			lifespan: 80,
-			purposeLabel: data.purposeLabel || ''
-		}).returning();
+		const [newUser] = await db
+			.insert(user)
+			.values({
+				birthDate: `${birthYear}-01-01`,
+				lifespan: 80,
+				purposeLabel: data.purposeLabel || ''
+			})
+			.returning();
 
 		// 2. Create Affirmations
 		if (data.affirmations.length > 0) {
-			await db.insert(affirmation).values(
-				data.affirmations.map(text => ({ text }))
-			);
+			await db.insert(affirmation).values(data.affirmations.map((text) => ({ text })));
 		}
 
 		// 3. Create Necessity Blocks (exactly 4)
@@ -58,7 +59,11 @@ export async function seedDatabase() {
 		}
 
 		// 4. Create initial objectives
-		const categories: ObjectiveCategory[] = ['long-term-purpose', 'weekly-purpose', 'weekly-necessity'];
+		const categories: ObjectiveCategory[] = [
+			'long-term-purpose',
+			'weekly-purpose',
+			'weekly-necessity'
+		];
 		for (const category of categories) {
 			const objectives = data.objectives[category];
 			if (objectives && objectives.length > 0) {

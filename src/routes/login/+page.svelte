@@ -9,13 +9,19 @@
 			<h2 class="h2 font-bold">Memento Mori</h2>
 			<p class="text-surface-600-300-token">Login to access your dashboard.</p>
 		</div>
-		
+
 		<form method="POST" use:enhance class="space-y-4">
 			<label class="label text-left">
 				<span>Password</span>
-				<input class="input" type="password" name="password" required placeholder="Enter password" />
+				<input
+					class="input"
+					type="password"
+					name="password"
+					required
+					placeholder="Enter password"
+				/>
 			</label>
-			
+
 			{#if form?.error}
 				<div class="alert variant-filled-error">{form.error}</div>
 			{/if}

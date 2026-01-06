@@ -11,7 +11,7 @@ To keep things grounded, the app features a **Memento Mori** death clock—a rem
 ### Core Concepts
 
 - **One Primary Focus**: Define your primary focus (e.g., "Your Business", "Writing", "Music"). This is the one thing you should be working toward.
-- **Limited Objectives**: 
+- **Limited Objectives**:
   - 3 long-term objectives (clear monthly/quarterly/yearly)
   - 3 weekly objectives (clear weekly)
   - 2 weekly necessity objectives (clear weekly)
@@ -40,30 +40,30 @@ This application is designed to be deployed on **Vercel** with a **Turso** (libS
 ### Deployment Steps
 
 1.  **Setup Vercel Project:**
-    *   Import this repository into a new Vercel project.
-    *   Select SvelteKit as the framework (Vercel usually detects this automatically).
+    - Import this repository into a new Vercel project.
+    - Select SvelteKit as the framework (Vercel usually detects this automatically).
 
 2.  **Setup Turso Database:**
-    *   Create a new database in Turso.
-    *   Get the `DATABASE_URL` and `DATABASE_AUTH_TOKEN`.
-    *   The database will be automatically seeded on first run.
+    - Create a new database in Turso.
+    - Get the `DATABASE_URL` and `DATABASE_AUTH_TOKEN`.
+    - The database will be automatically seeded on first run.
 
 3.  **Create Password Hash:**
-    *   The app uses a simple single-user authentication system. You need to generate a bcrypt hash for your desired password.
-    *   You can do this via a node script:
-        ```bash
-        node -e "console.log(require('bcryptjs').hashSync('YOUR_PASSWORD_HERE', 10))"
-        ```
+    - The app uses a simple single-user authentication system. You need to generate a bcrypt hash for your desired password.
+    - You can do this via a node script:
+      ```bash
+      node -e "console.log(require('bcryptjs').hashSync('YOUR_PASSWORD_HERE', 10))"
+      ```
 
 4.  **Environment Variables:**
-    *   In your Vercel project settings, add the following environment variables:
-        *   `DATABASE_URL`: Your Turso database URL (e.g., `libsql://...`).
-        *   `DATABASE_AUTH_TOKEN`: Your Turso authentication token.
-        *   `ADMIN_PASSWORD_HASH`: The bcrypt hash you generated in step 3.
-        *   `AUTH_SECRET`: A random string used for signing session cookies (e.g., generate with `openssl rand -base64 32`).
+    - In your Vercel project settings, add the following environment variables:
+      - `DATABASE_URL`: Your Turso database URL (e.g., `libsql://...`).
+      - `DATABASE_AUTH_TOKEN`: Your Turso authentication token.
+      - `ADMIN_PASSWORD_HASH`: The bcrypt hash you generated in step 3.
+      - `AUTH_SECRET`: A random string used for signing session cookies (e.g., generate with `openssl rand -base64 32`).
 
 5.  **Deploy:**
-    *   Trigger a deployment in Vercel. Once finished, your app should be live and protected by the login screen.
+    - Trigger a deployment in Vercel. Once finished, your app should be live and protected by the login screen.
 
 ### Database Reset
 
@@ -80,6 +80,7 @@ Then restart the dev server to trigger seeding.
 ### Default Data
 
 Edit `static/default-data.json` to customize:
+
 - Initial affirmations
 - Default age for death clock calculation
 - Primary focus label
@@ -89,6 +90,7 @@ Edit `static/default-data.json` to customize:
 ### Necessity Blocks
 
 The four necessity blocks can be renamed in the app under Block Bank → "Customize Block Names". Default blocks are:
+
 - **Work** (blue) - Employment, contracting, etc.
 - **Chores** (gray) - Household tasks, errands
 - **Exercise** (green) - Physical activity, health
@@ -96,9 +98,9 @@ The four necessity blocks can be renamed in the app under Block Bank → "Custom
 
 ## Limitations
 
-*   **Single User:** The authentication system is designed for personal use by a single user.
-*   **Intentionally Limited:** The restricted number of objectives is a feature, not a bug—it forces prioritization.
-*   **Fresh Slate Philosophy:** Objectives don't carry over indefinitely. If something wasn't important enough to complete, re-evaluate whether it belongs in your life.
+- **Single User:** The authentication system is designed for personal use by a single user.
+- **Intentionally Limited:** The restricted number of objectives is a feature, not a bug—it forces prioritization.
+- **Fresh Slate Philosophy:** Objectives don't carry over indefinitely. If something wasn't important enough to complete, re-evaluate whether it belongs in your life.
 
 ## Contributing
 
@@ -113,4 +115,4 @@ Contributions are welcome! If you'd like to improve the app or adapt it for your
 
 ---
 
-*Built with SvelteKit, Svelte 5, Tailwind CSS, Skeleton UI, and Drizzle ORM.*
+_Built with SvelteKit, Svelte 5, Tailwind CSS, Skeleton UI, and Drizzle ORM._

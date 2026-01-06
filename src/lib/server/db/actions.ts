@@ -18,7 +18,7 @@ export const getDeathClock = async () => {
 	if (!userData.length) return null;
 
 	const { birthDate, lifespan, purposeLabel, purposeBricks } = userData[0];
-	
+
 	const birth = new Date(birthDate);
 	const death = new Date(birth);
 	death.setFullYear(birth.getFullYear() + lifespan);
@@ -36,8 +36,12 @@ export const getDeathClock = async () => {
 };
 
 export const getRandomAffirmation = async () => {
-	const result = await db.select().from(affirmation).orderBy(sql`RANDOM()`).limit(1);
-	return result[0]?.text || "Memento Mori";
+	const result = await db
+		.select()
+		.from(affirmation)
+		.orderBy(sql`RANDOM()`)
+		.limit(1);
+	return result[0]?.text || 'Memento Mori';
 };
 
 export const getNecessityBlocks = async () => {
@@ -53,7 +57,12 @@ export const getScheduleAllocations = async () => {
 };
 
 export const updateSchedule = async (
-	newAllocations: { blockType: string; necessityBlockId: number | null; dayOfWeek: number; hourSlot: number }[]
+	newAllocations: {
+		blockType: string;
+		necessityBlockId: number | null;
+		dayOfWeek: number;
+		hourSlot: number;
+	}[]
 ) => {
 	return await db.transaction(async (tx) => {
 		await tx.delete(scheduleAllocation);
@@ -64,28 +73,30 @@ export const updateSchedule = async (
 	});
 };
 
-export const updateObjective = async (id: number, updates: { text?: string; isCompleted?: boolean }) => {
-	await db.update(objective)
-		.set(updates)
-		.where(eq(objective.id, id));
+export const updateObjective = async (
+	id: number,
+	updates: { text?: string; isCompleted?: boolean }
+) => {
+	await db.update(objective).set(updates).where(eq(objective.id, id));
 };
 
 export const addObjective = async (category: ObjectiveCategory, text: string = '') => {
 	// Check count first
-	const existing = await db.select()
-		.from(objective)
-		.where(eq(objective.category, category));
-	
+	const existing = await db.select().from(objective).where(eq(objective.category, category));
+
 	const limit = OBJECTIVE_LIMITS[category];
 	if (existing.length >= limit) return null;
 
-	const result = await db.insert(objective).values({
-		category,
-		text,
-		isCompleted: false,
-		sortOrder: existing.length
-	}).returning();
-	
+	const result = await db
+		.insert(objective)
+		.values({
+			category,
+			text,
+			isCompleted: false,
+			sortOrder: existing.length
+		})
+		.returning();
+
 	return result[0];
 };
 
@@ -100,12 +111,15 @@ export const clearObjectivesByCategory = async (category: ObjectiveCategory) => 
 
 export const updateUser = async (birthDate: string, lifespan: number, purposeLabel?: string) => {
 	if (!birthDate || isNaN(lifespan)) return;
-	
-	const updates: { birthDate: string; lifespan: number; purposeLabel?: string } = { birthDate, lifespan };
+
+	const updates: { birthDate: string; lifespan: number; purposeLabel?: string } = {
+		birthDate,
+		lifespan
+	};
 	if (purposeLabel !== undefined) {
 		updates.purposeLabel = purposeLabel;
 	}
-	
+
 	await db.update(user).set(updates);
 };
 
@@ -114,27 +128,28 @@ export const updatePurposeLabel = async (purposeLabel: string) => {
 };
 
 export const updateNecessityBlock = async (id: number, name: string) => {
-	await db.update(necessityBlock)
-		.set({ name })
-		.where(eq(necessityBlock.id, id));
+	await db.update(necessityBlock).set({ name }).where(eq(necessityBlock.id, id));
 };
 
 export const addNecessityBlock = async (name: string, color: string) => {
 	// Get the highest sortOrder to place the new block at the end
 	const existing = await db.select().from(necessityBlock).orderBy(necessityBlock.sortOrder);
 	const nextSortOrder = existing.length > 0 ? existing[existing.length - 1].sortOrder + 1 : 0;
-	
+
 	// Get the user id (assuming single user)
 	const userData = await db.select().from(user).limit(1);
 	if (!userData.length) return null;
-	
-	const result = await db.insert(necessityBlock).values({
-		name,
-		color,
-		sortOrder: nextSortOrder,
-		userId: userData[0].id
-	}).returning();
-	
+
+	const result = await db
+		.insert(necessityBlock)
+		.values({
+			name,
+			color,
+			sortOrder: nextSortOrder,
+			userId: userData[0].id
+		})
+		.returning();
+
 	return result[0];
 };
 
@@ -154,12 +169,9 @@ export const addAffirmation = async (text: string) => {
 };
 
 export const updateAffirmation = async (id: number, text: string) => {
-	await db.update(affirmation)
-		.set({ text })
-		.where(eq(affirmation.id, id));
+	await db.update(affirmation).set({ text }).where(eq(affirmation.id, id));
 };
 
 export const deleteAffirmation = async (id: number) => {
 	await db.delete(affirmation).where(eq(affirmation.id, id));
 };
-

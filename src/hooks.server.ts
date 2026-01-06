@@ -3,7 +3,7 @@ import { verifySessionToken } from '$lib/server/auth';
 import { redirect, type Handle } from '@sveltejs/kit';
 
 console.log('Initializing server...');
-seedDatabase().catch(err => {
+seedDatabase().catch((err) => {
 	console.error('Failed to seed database during startup:', err);
 });
 

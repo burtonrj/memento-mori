@@ -9,7 +9,7 @@ vi.mock('./index', () => ({
 		insert: vi.fn(),
 		delete: vi.fn(),
 		update: vi.fn(),
-		transaction: vi.fn((cb) => cb({ delete: vi.fn(), insert: vi.fn() })),
+		transaction: vi.fn((cb) => cb({ delete: vi.fn(), insert: vi.fn() }))
 	}
 }));
 
@@ -56,9 +56,9 @@ describe('Database Actions', () => {
 		it('should return necessity blocks ordered by sortOrder', async () => {
 			const mockBlocks = [
 				{ id: 1, name: 'Work', color: '#3b82f6', sortOrder: 0 },
-				{ id: 2, name: 'Chores', color: '#6b7280', sortOrder: 1 },
+				{ id: 2, name: 'Chores', color: '#6b7280', sortOrder: 1 }
 			];
-			
+
 			const selectMock = {
 				from: vi.fn().mockReturnValue({
 					orderBy: vi.fn().mockResolvedValue(mockBlocks)
@@ -77,9 +77,9 @@ describe('Database Actions', () => {
 		it('should return objectives ordered by sortOrder', async () => {
 			const mockObjectives = [
 				{ id: 1, category: 'long-term-purpose', text: 'Goal 1', isCompleted: false, sortOrder: 0 },
-				{ id: 2, category: 'weekly-purpose', text: 'Goal 2', isCompleted: false, sortOrder: 0 },
+				{ id: 2, category: 'weekly-purpose', text: 'Goal 2', isCompleted: false, sortOrder: 0 }
 			];
-			
+
 			const selectMock = {
 				from: vi.fn().mockReturnValue({
 					orderBy: vi.fn().mockResolvedValue(mockObjectives)

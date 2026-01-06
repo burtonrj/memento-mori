@@ -9,7 +9,7 @@ const client = createClient({ url, authToken });
 
 async function resetDatabase() {
 	console.log('Dropping existing tables...');
-	
+
 	// Drop tables in correct order (respect foreign keys)
 	const dropStatements = [
 		'DROP TABLE IF EXISTS schedule_allocation',
@@ -31,7 +31,7 @@ async function resetDatabase() {
 	}
 
 	console.log('\nCreating new tables...');
-	
+
 	// Create new tables
 	const createStatements = [
 		`CREATE TABLE user (
