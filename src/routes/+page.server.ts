@@ -10,6 +10,8 @@ import {
 	getScheduleAllocations,
 	updateSchedule,
 	updateNecessityBlock,
+	addNecessityBlock,
+	deleteNecessityBlock,
 	updatePurposeLabel,
 	clearObjectivesByCategory,
 	PURPOSE_COLOR
@@ -62,6 +64,25 @@ export const actions: Actions = {
 		
 		if (!isNaN(id) && name !== undefined) {
 			await updateNecessityBlock(id, name);
+		}
+		return { success: true };
+	},
+	
+	addNecessityBlock: async ({ request }) => {
+		const data = await request.formData();
+		const name = String(data.get('name') || 'New Block');
+		const color = String(data.get('color') || '#6b7280');
+		
+		await addNecessityBlock(name, color);
+		return { success: true };
+	},
+	
+	deleteNecessityBlock: async ({ request }) => {
+		const data = await request.formData();
+		const id = Number(data.get('id'));
+		
+		if (!isNaN(id)) {
+			await deleteNecessityBlock(id);
 		}
 		return { success: true };
 	},

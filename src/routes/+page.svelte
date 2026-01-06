@@ -154,6 +154,12 @@
 		submitSchedule();
 	}
 
+	function clearAllAllocations() {
+		if (isLocked) return;
+		allocations = [];
+		submitSchedule();
+	}
+
 	let scheduleForm: HTMLFormElement;
 	function submitSchedule() {
 		setTimeout(() => {
@@ -559,35 +565,83 @@
 					<Accordion collapsible class="mt-4">
 						<Accordion.Item value="block-settings">
 							<Accordion.ItemTrigger class="group flex items-center justify-between gap-2 w-full cursor-pointer py-2 px-4 rounded-token hover:bg-surface-500/10 transition-colors">
-								<span class="text-sm text-surface-400">Customize Block Names</span>
+								<span class="text-sm text-surface-400">Manage Blocks</span>
 								<Accordion.ItemIndicator>
 									<ChevronDown class="h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
 								</Accordion.ItemIndicator>
 							</Accordion.ItemTrigger>
 							<Accordion.ItemContent>
-								<div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-									{#each data.necessityBlocks as block (block.id)}
-										<form
-											method="POST"
-											action="?/updateNecessityBlock"
-											use:enhance={() => {
-												return async ({ update }) => {
-													await update({ reset: false });
-												};
-											}}
-											class="flex flex-col gap-2"
+								<div class="p-4 space-y-4">
+									<!-- Existing blocks -->
+									<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+										{#each data.necessityBlocks as block (block.id)}
+											<div class="flex items-center gap-2 bg-surface-500/10 rounded-lg p-3">
+												<div class="w-8 h-8 rounded flex-shrink-0" style="background-color: {block.color}"></div>
+												<form
+													method="POST"
+													action="?/updateNecessityBlock"
+													use:enhance={() => {
+														return async ({ update }) => {
+															await update({ reset: false });
+														};
+													}}
+													class="flex-1"
+												>
+													<input type="hidden" name="id" value={block.id} />
+													<input
+														class="input w-full"
+														type="text"
+														name="name"
+														value={block.name}
+														onchange={(e) => e.currentTarget.form?.requestSubmit()}
+													/>
+												</form>
+												<form
+													method="POST"
+													action="?/deleteNecessityBlock"
+													use:enhance
+												>
+													<input type="hidden" name="id" value={block.id} />
+													<button
+														type="submit"
+														class="btn btn-sm preset-filled-error-500 p-2"
+														aria-label="Delete {block.name} block"
+													>
+														<Trash2 class="w-4 h-4" />
+													</button>
+												</form>
+											</div>
+										{/each}
+									</div>
+									
+									<!-- Add new block form -->
+									<form
+										method="POST"
+										action="?/addNecessityBlock"
+										use:enhance
+										class="flex items-center gap-3 p-3 border border-dashed border-surface-500/30 rounded-lg"
+									>
+										<input
+											type="color"
+											name="color"
+											value="#6b7280"
+											class="w-8 h-8 rounded cursor-pointer"
+										/>
+										<input
+											class="input flex-1"
+											type="text"
+											name="name"
+											placeholder="New block name..."
+											required
+										/>
+										<button
+											type="submit"
+											class="btn preset-filled-primary-500"
 										>
-											<input type="hidden" name="id" value={block.id} />
-											<div class="w-6 h-6 rounded" style="background-color: {block.color}"></div>
-											<input
-												class="input"
-												type="text"
-												name="name"
-												value={block.name}
-												onchange={(e) => e.currentTarget.form?.requestSubmit()}
-											/>
-										</form>
-									{/each}
+											<Plus class="w-4 h-4" />
+											<span>Add Block</span>
+										</button>
+									</form>
 								</div>
 							</Accordion.ItemContent>
 						</Accordion.Item>
@@ -642,7 +696,15 @@
 							{/each}
 						{/each}
 					</div>
-					<div class="flex justify-end pt-2">
+					<div class="flex justify-end gap-2 pt-2">
+						<button
+							class="btn preset-filled-surface-500 flex items-center gap-2"
+							onclick={clearAllAllocations}
+							disabled={isLocked}
+						>
+							<Eraser class="w-4 h-4" />
+							<span class="text-sm font-bold">Clear All</span>
+						</button>
 						<button
 							class="btn {isLocked ? 'variant-filled-error' : 'variant-filled-success'} flex items-center gap-2 transition-all"
 							onclick={() => (isLocked = !isLocked)}

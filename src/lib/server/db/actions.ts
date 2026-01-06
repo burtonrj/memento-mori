@@ -119,6 +119,32 @@ export const updateNecessityBlock = async (id: number, name: string) => {
 		.where(eq(necessityBlock.id, id));
 };
 
+export const addNecessityBlock = async (name: string, color: string) => {
+	// Get the highest sortOrder to place the new block at the end
+	const existing = await db.select().from(necessityBlock).orderBy(necessityBlock.sortOrder);
+	const nextSortOrder = existing.length > 0 ? existing[existing.length - 1].sortOrder + 1 : 0;
+	
+	// Get the user id (assuming single user)
+	const userData = await db.select().from(user).limit(1);
+	if (!userData.length) return null;
+	
+	const result = await db.insert(necessityBlock).values({
+		name,
+		color,
+		sortOrder: nextSortOrder,
+		userId: userData[0].id
+	}).returning();
+	
+	return result[0];
+};
+
+export const deleteNecessityBlock = async (id: number) => {
+	// First, delete any schedule allocations that reference this block
+	await db.delete(scheduleAllocation).where(eq(scheduleAllocation.necessityBlockId, id));
+	// Then delete the block itself
+	await db.delete(necessityBlock).where(eq(necessityBlock.id, id));
+};
+
 export const getAllAffirmations = async () => {
 	return await db.select().from(affirmation);
 };
