@@ -31,7 +31,10 @@
 
 	// Computed displayed affirmation
 	let displayedAffirmation = $derived(
-		affirmations.length > 0 && affirmations[currentAffirmationIndex]
+		affirmations.length > 0 &&
+			currentAffirmationIndex >= 0 &&
+			currentAffirmationIndex < affirmations.length &&
+			affirmations[currentAffirmationIndex]
 			? affirmations[currentAffirmationIndex].text
 			: data.affirmation
 	);
